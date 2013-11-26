@@ -10,8 +10,8 @@ var c=document.getElementById("myCanvas");
 var ctx=c.getContext("2d");
 var x = canvas.width/2;
 var y = canvas.height/2;
-var fps = 2;
-var d = 10;
+var fps = 3;
+var d = 20;
 var life = new Array();
 life[0] = [x,y];
 
@@ -23,6 +23,7 @@ function drawupdatelifedeath(){
 	
 	var z=0;
 	while(z<life.length){
+		//alert(life.length);
 		ctx.beginPath();
 		ctx.arc(life[z][0], life[z][1], d/2, 0, Math.PI*2, true);
 		ctx.fill();
@@ -37,8 +38,17 @@ function drawupdatelifedeath(){
 	//DEATH
 	var dying = life.slice(0);
 	life = [];
-	alert(dying[0][0].toString());
 	
+	//REBIRTH
+	z=0;
+	var j=0;
+	while(z<dying.length){
+		life[j++]=[dying[z][0]-d,dying[z][1]];
+		life[j++]=[dying[z][0]+d,dying[z][1]];
+		life[j++]=[dying[z][0],dying[z][1]-d];
+		life[j++]=[dying[z][0],dying[z][1]+d];
+		z++;
+	}
 	
 }
 </script>
