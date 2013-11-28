@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<canvas id="myCanvas" style="border:1px solid #d3d3d3;" onclick="decidingMoment()">
+Your browser does not support the HTML5 canvas tag.</canvas>
+<p>Pendulam: <span id="pendulamvalue"></span></p>
+<p id="debug"></p>
+<script>
+var canvas = document.getElementById("myCanvas");
+canvas.setAttribute("width", window.innerWidth);
+canvas.setAttribute("height", window.innerHeight);
+var c=document.getElementById("myCanvas");
+var ctx=c.getContext("2d");
+ctx.beginPath();
+var linex = canvas.width/2;
+var liney = canvas.height/2;
+ctx.moveTo(linex,liney);
+
+var debug = document.getElementById("debug");
+
+var pendulamvalue = document.getElementById("pendulamvalue");
+var direction = 1;
+var pendulam = 0;
+
+window.setInterval(function(){doPendulam()},1);
+window.setInterval(function(){drawLine()},10);
+
+function doPendulam(){
+	pendulamvalue.innerHTML = pendulam;
+	if(pendulam==2) pendulam=0;
+	else pendulam++;
+}
+
+function drawLine(){
+	if(direction==1) linex++;
+	else if (direction==2) liney--;
+	else if (direction==3) linex--;
+	else if (direction==4) liney++;
+			
+	ctx.lineTo(linex,liney);
+	ctx.stroke();
+	
+	debug.innerHTML = linex.toString() +" "+ liney.toString();
+}
+
+function decidingMoment(){
+	if(pendulam==1){
+		if(direction==4) direction=1;
+		else direction++;
+	}
+	else if (pendulam==2){
+		if(direction==1) direction=4;
+		else direction--;		
+	}
+}
+
+</script>
+</body>
+</html>
