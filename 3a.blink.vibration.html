@@ -13,7 +13,7 @@ var canvas = document.getElementById("myCanvas");
 var context=canvas.getContext("2d");
 var x = canvas.width/2;
 var y = canvas.height/2;
-var fps = 3;
+var fps = 10;
 
 var sqstartx = 0;
 var sqstarty = 0;
@@ -24,35 +24,10 @@ var sqgap = 10;
 
 var colorswitch = 1;
 
-drawupdatelifedeath();
+visualize();
 
-function bigoneline(){
-	sqstartx = 10;
-	sqstarty = 100;
-	sqnumx = 20;
-	sqnumy = 1;
-	sqsize = 100;
-	sqgap = 10;
-}
-function arrows(){
-	sqstartx = 10;
-	sqstarty = 10;
-	sqnumx = 20;
-	sqnumy = 10;
-	sqsize = 10;
-	sqgap = 1;
-}
-function tvbox(){
-	sqstartx = 0;
-	sqstarty = 0;
-	sqnumx = 200;
-	sqnumy = 10;
-	sqsize = 2;
-	sqgap = 0;
-}
+function visualize(){
 
-function drawupdatelifedeath(){
-	
 	//CLEAR
 	context.clearRect(0,0,canvas.width,canvas.height);
 	
@@ -65,9 +40,7 @@ function drawupdatelifedeath(){
 			var ry = sqstarty + j * (sqsize + 2*sqgap);
 			
 			if((colorswitch==1 && (i+j)%2==0) || (colorswitch==2 && (i+j)%2!=0)){
-				
-				//alert("s:"+colorswitch.toString()+" i+j:"+(i+j).toString());
-				
+								
 				context.beginPath();
 				context.arc(rx, ry, sqsize/2, 0, Math.PI*2, true);
 				context.fillStyle   = "rgb(1,1,1)";
@@ -82,13 +55,41 @@ function drawupdatelifedeath(){
 
 	// request another frame
 	setTimeout(function() {
-	  requestAnimationFrame(drawupdatelifedeath);
+	  requestAnimationFrame(visualize);
 	}, 1000 / fps);
 	
 	//CALC
 	if(colorswitch == 1) colorswitch=2;
 	else colorswitch = 1;
 	
+}
+
+function bigoneline(){
+	sqstartx = 10;
+	sqstarty = 100;
+	sqnumx = 20;
+	sqnumy = 1;
+	sqsize = 100;
+	sqgap = 10;
+	fps = 5;
+}
+function arrows(){
+	sqstartx = 10;
+	sqstarty = 10;
+	sqnumx = 20;
+	sqnumy = 10;
+	sqsize = 10;
+	sqgap = 1;
+	fps = 10;
+}
+function tvbox(){
+	sqstartx = 0;
+	sqstarty = 0;
+	sqnumx = 100;
+	sqnumy = 100;
+	sqsize = 2;
+	sqgap = 0;
+	fps = 10;
 }
 </script>
 </body>
