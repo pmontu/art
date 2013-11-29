@@ -18,17 +18,21 @@ life[0] = [x,y];
 drawupdatelifedeath();
 
 function drawupdatelifedeath(){
-	
+
 	ctx.clearRect(0,0,canvas.width,canvas.height);
 	
 	var z=0;
 	while(z<life.length){
-		//alert(life.length);
+		
+		var pixels = ctx.getImageData(life[z][0], life[z][1], 1, 1);
+		//alert(pixels.data[0]);
+		
 		ctx.beginPath();
 		ctx.arc(life[z][0], life[z][1], d/2, 0, Math.PI*2, true);
+		ctx.fillStyle   = "rgb(01,01,01)";
 		ctx.fill();
 		z++;
-	}	
+	}
 
 	// request another frame
 	setTimeout(function() {
