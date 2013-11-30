@@ -8,59 +8,138 @@ var canvas = document.getElementById("myCanvas");
 var context=canvas.getContext("2d");
 var x = canvas.width/2;
 var y = canvas.height/2;
-var fps = 10;
+var fps = 4;
 
-var sqstartx = 200;
-var sqstarty = 200;
-var sqnumx = 2;
-var sqnumy = 1;
-var sqsize = 50;
-var sqgap = 0;
-var sqsizemin = 10;
-var sqstep=10;
+var sqstartx;
+var sqstarty;
+var sqnumx;
+var sqnumy;
+var sqsize;
+var sqgap; 
+var sqsizemin5;
+var sqstep;
+
+//2
+/*sqstartx = 200;
+sqstarty = 200;
+sqnumx = 2;
+sqnumy = 1;
+sqsize = 50;
+sqgap = 0; 
+sqsizemin = 10;
+sqstep=5;
+fps = 4;*/
+
+//line by x
+/*sqstartx = 0;
+sqstarty = 200;
+sqnumx = 20;
+sqnumy = 1;
+sqsize = 50;
+sqgap = 0; 
+sqsizemin = 10;
+sqstep=5;
+fps = 4;*/
+
+//line by y
+/*sqstartx = 400;
+sqstarty = 0;
+sqnumx = 1;
+sqnumy = 30;
+sqsize = 50;
+sqgap = 0; 
+sqsizemin = 10;
+sqstep=5;
+fps = 4;*/
+
+//2face
+/*sqstartx = 400;
+sqstarty = 0;
+sqnumx = 1;
+sqnumy = 30;
+sqsize = 50;
+sqgap = 0; 
+sqsizemin = 10;
+sqstep=5;
+fps = 4;*/
+
+//bunch medium
+/*sqstartx = 0;
+sqstarty = 0;
+sqnumx = 20;
+sqnumy = 10;
+sqsize = 20;
+sqgap = 0; 
+sqsizemin = 5;
+sqstep=4;
+fps = 4;*/
+
+//zebra
+sqstartx = 0;
+sqstarty = 0;
+sqnumx = 20;
+sqnumy = 10;
+sqsize = 100;
+sqgap = 0; 
+sqsizemin = 25;
+sqstep=4;
+fps = 4;
+
+//eye pain
+/*sqstartx = 0;
+sqstarty = 0;
+sqnumx = 20;
+sqnumy = 10;
+sqsize = 100;
+sqgap = 0; 
+sqsizemin = 0;
+sqstep=2;
+fps = 10;*/
 
 var increment = (sqsize-sqsizemin)/sqstep;
+
+var counter = 0;
 
 var direction = 1;
 
 visualizePowerAndInequality();
 
 function visualizePowerAndInequality(){
-
+	
+	//alert(direction);
+	
 	//CLEAR
 	context.clearRect(0,0,canvas.width,canvas.height);
 	
-	//PRINT
-	var k=0;
-	while(k<sqstep){
+	var d1 = sqsize - counter*(increment);
+	var d2 = sqsizemin + counter*(increment);
 	
-		var d1 = sqsize - k*(increment);
-		var d2 = sqsizemin + k*(increment);
-	
-		var j=0;
-		while(j<sqnumy){
-			var i=0;
-			while(i<sqnumx){
-				var rx = sqstartx + i * (sqsize + 2*sqgap);
-				var ry = sqstarty + j * (sqsize + 2*sqgap);
-				
-				var D;
-				if(direction==1 && (i+j)%2==0) D = d1;
-				else if(direction==1 && (i+j)%2!=0) D = d2;
-				else if(direction==2 && (i+j)%2==0) D = d2;
-				else if(direction==2 && (i+j)%2!=0) D = d1;
-				
-				context.beginPath();
-				context.arc(rx, ry, D/2, 0, Math.PI*2, true);
-				context.fillStyle   = "rgb(1,1,1)";
-				context.strokeStyle = "rgb(ff,ff,ff)";
-				context.fill();
-				
-				i++;
-			}
-			j++;
+	//alert(" inc:" + increment.toString() + " ctr:" + counter.toString() + " d1:" + d1.toString() + " d2:" + d2.toString());
+
+	var j=0;
+	while(j<sqnumy){
+		var i=0;
+		while(i<sqnumx){
+			var rx = sqstartx + i * (sqsize + 2*sqgap);
+			var ry = sqstarty + j * (sqsize + 2*sqgap);
+			
+			var D;
+			if(direction==1 && (i+j)%2==0) D = d1;
+			else if(direction==1 && (i+j)%2!=0) D = d2;
+			else if(direction==2 && (i+j)%2==0) D = d2;
+			else if(direction==2 && (i+j)%2!=0) D = d1;
+			
+			//alert("D:"+D.toString());
+			
+			context.beginPath();
+			context.arc(rx, ry, D/2, 0, Math.PI*2, true);
+			context.fillStyle   = "rgb(1,1,1)";
+			context.strokeStyle = "rgb(ff,ff,ff)";
+			context.fill();
+			
+			i++;
 		}
-		k++;		
+		j++;
 	}
 	// request another frame
 	setTimeout(function() {
@@ -68,8 +147,10 @@ function visualizePowerAndInequality(){
 	}, 1000 / fps);
 	
 	//CALC - SWITCH AFTER ONE CYCLE(STEPS) COMPLETE
-	if(direction==1) direction=2;
-	else direction=1;
+	if(counter==sqstep && direction==1) {direction=2;counter=0}
+	else if(counter==sqstep && direction==2) {direction=1;counter=0}	
+	counter++;
+	
 	
 }
 
