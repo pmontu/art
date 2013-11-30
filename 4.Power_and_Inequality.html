@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<body>
+<canvas id="myCanvas" width="800" height="600" style="border:1px solid #d3d3d3;">
+Your browser does not support the HTML5 canvas tag.</canvas>
+<script>
+var canvas = document.getElementById("myCanvas");
+var context=canvas.getContext("2d");
+var x = canvas.width/2;
+var y = canvas.height/2;
+var fps = 10;
+
+var sqstartx = 200;
+var sqstarty = 200;
+var sqnumx = 2;
+var sqnumy = 1;
+var sqsize = 50;
+var sqgap = 0;
+var sqsizemin = 10;
+var sqstep=10;
+
+var increment = (sqsize-sqsizemin)/sqstep;
+
+var direction = 1;
+
+visualizePowerAndInequality();
+
+function visualizePowerAndInequality(){
+
+	//CLEAR
+	context.clearRect(0,0,canvas.width,canvas.height);
+	
+	//PRINT
+	var k=0;
+	while(k<sqstep){
+	
+		var d1 = sqsize - k*(increment);
+		var d2 = sqsizemin + k*(increment);
+	
+		var j=0;
+		while(j<sqnumy){
+			var i=0;
+			while(i<sqnumx){
+				var rx = sqstartx + i * (sqsize + 2*sqgap);
+				var ry = sqstarty + j * (sqsize + 2*sqgap);
+				
+				var D;
+				if(direction==1 && (i+j)%2==0) D = d1;
+				else if(direction==1 && (i+j)%2!=0) D = d2;
+				else if(direction==2 && (i+j)%2==0) D = d2;
+				else if(direction==2 && (i+j)%2!=0) D = d1;
+				
+				context.beginPath();
+				context.arc(rx, ry, D/2, 0, Math.PI*2, true);
+				context.fillStyle   = "rgb(1,1,1)";
+				context.strokeStyle = "rgb(ff,ff,ff)";
+				context.fill();
+				
+				i++;
+			}
+			j++;
+		}
+		k++;		
+	}
+	// request another frame
+	setTimeout(function() {
+	  requestAnimationFrame(visualizePowerAndInequality);
+	}, 1000 / fps);
+	
+	//CALC - SWITCH AFTER ONE CYCLE(STEPS) COMPLETE
+	if(direction==1) direction=2;
+	else direction=1;
+	
+}
+
+</script>
+</body>
+</html>
