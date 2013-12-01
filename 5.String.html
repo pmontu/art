@@ -22,7 +22,7 @@ var fromy = topy;
 var tox = bottomx;
 var toy;
 
-var fps = 4;
+var fps = 10;
 
 var k=1;
 var x = fromx;
@@ -35,12 +35,10 @@ var evenbreaks = 10;
 var j1 = 0;
 var j2 = 0;
 toy = (evenbreaks-1)*(bottomy-topy)/evenbreaks;
-//toy = 150 + (bottomy-150)/2;
+toy = bottomy;
 
 var steps = 10;
 var incrementy = Math.abs(toy-fromy)/steps;
-
-alert(toy);
 
 function draw(x,y,d){
 
@@ -53,12 +51,12 @@ function animate(){
 
 	context.clearRect(0,0,canvas.width,canvas.height);
 
-	draw(topx,topy,2);
+	/*draw(topx,topy,2);
 	draw(bottomx,bottomy,2);
 	draw(hookleftx,hooklefty,2);
 	draw(hookrightx,hookrighty,2);
 	draw(tox,toy,2);
-	draw(fromx,fromy,2);
+	draw(fromx,fromy,2);*/
 		
 	y = incrementy*k;
 	//alert(y.toString() + " " + incrementy.toString() + " " + k.toString() + " " + toy.toString());
@@ -69,6 +67,13 @@ function animate(){
 	context.strokeStyle = "rgb(1,0,0)";
 	context.fill();	
 	
+	setTimeout(function() {
+	  requestAnimationFrame(animate);
+	}, 1000 / fps);
+	
+	if(toy<fromy){
+		return;
+	}
 	if(direction==2){
 		k--;
 	}
@@ -78,13 +83,13 @@ function animate(){
 	if(y>=toy){
 		direction = 2;
 		k-=2;
-		fromy = (++j2)(bottomy-topy)/evenbreaks;
+		fromy = ++j2*(bottomy-topy)/evenbreaks;
 	}
 	else if(y<=fromy){
 		direction = 1;
 		k+=2;
-		toy = (evenbreaks-++j1)(bottomy-topy)/evenbreaks;
-	}	
+		toy = (evenbreaks-++j1)*(bottomy-topy)/evenbreaks;
+	}
 	
 }
 
