@@ -32,6 +32,8 @@ var k=0;
 var x = fromx;
 var y = fromy;
 
+var direction = 1;
+
 function animate(){
 
 	context.clearRect(0,0,canvas.width,canvas.height);
@@ -56,7 +58,8 @@ function animate(){
 	context.arc(tox, toy, 2, 0, Math.PI*2, true);
 	context.fill();
 	
-	if(y>=toy){ return;}
+	if(direction==2){animate2();return;}
+	if(y>=toy){ direction = 2; animate2();return;}
 		
 	y = k* incrementy;
 	
@@ -67,6 +70,16 @@ function animate(){
 	
 	k++;
 	
+}
+function animate2(){
+
+	k--;
+	y = k* incrementy;
+
+	context.beginPath();
+	context.arc(x, y, 2, 0, Math.PI*2, true);
+	context.fillStyle   = "rgb(ff,0,0)";
+	context.fill();
 }
 
 </script>
