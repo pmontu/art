@@ -28,11 +28,14 @@ var incrementy = Math.abs(toy-fromy)/steps;
 
 var fps = 4;
 
-var k=0;
+var k=1;
 var x = fromx;
 var y = fromy;
 
 var direction = 1;
+
+alert(incrementy);
+alert(incrementy*k);
 
 function animate(){
 
@@ -52,34 +55,29 @@ function animate(){
 	
 	context.beginPath();
 	context.arc(hookrightx, hookrighty, 2, 0, Math.PI*2, true);
-	context.fill();	
+	context.fill();
 	
 	context.beginPath();
 	context.arc(tox, toy, 2, 0, Math.PI*2, true);
 	context.fill();
 	
-	if(direction==2){animate2();return;}
-	if(y>=toy){ direction = 2; animate2();return;}
-		
-	y = k* incrementy;
+	y = incrementy*k;
 	
 	context.beginPath();
-	context.arc(x, y, 2, 0, Math.PI*2, true);
-	context.fillStyle   = "rgb(ff,0,0)";
-	context.fill();
+	context.arc(x, y, 3, 0, Math.PI*2, true);
+	context.fillStyle = "rgb(1,0,0)";
+	context.strokeStyle = "rgb(1,0,0)";
+	context.fill();	
 	
-	k++;
+	if(direction==2){
+		k--;
+	}
+	else if(direction==1){
+		k++;		
+	}
+	if(y>=toy){ direction = 2; k-=2}
+	else if(y<=fromy){ direction = 1; k+=2}	
 	
-}
-function animate2(){
-
-	k--;
-	y = k* incrementy;
-
-	context.beginPath();
-	context.arc(x, y, 2, 0, Math.PI*2, true);
-	context.fillStyle   = "rgb(ff,0,0)";
-	context.fill();
 }
 
 </script>
