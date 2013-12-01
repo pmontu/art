@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<body>
+<canvas id="myCanvas" width="600" height="600" style="border:1px solid #d3d3d3;">
+Your browser does not support the HTML5 canvas tag.</canvas>
+<script>
+var canvas = document.getElementById("myCanvas");
+var context=canvas.getContext("2d");
+
+var topx = canvas.width/2;
+var topy = 50;
+var bottomx = topx;
+var bottomy = canvas.height - 50;
+
+var hookleftx = 50;
+var hooklefty = canvas.height/2;
+var hookrightx = canvas.width - 50;
+var hookrighty = hooklefty;
+
+var fps = 4;
+
+var directiontowardsaway = 1;
+var directionexcitedrest = 1;
+
+var originx = topx;
+var originy = topy;
+
+var x = originx;
+var y = originy;
+
+var destinationx = bottomx;
+var destinationy = bottomy;
+
+var midx = originx;
+var midy = ((destinationy-originy)/2)+50;
+
+var tox = midx;
+var toy = midy + ((destinationy - midy)/2) + 50
+
+animate();
+
+function animate(){
+
+	context.clearRect(0,0,canvas.width,canvas.height);
+
+	context.beginPath();
+	context.arc(topx, topy, 2, 0, Math.PI*2, true);
+	context.fill();
+	
+	context.beginPath();
+	context.arc(bottomx, bottomy, 2, 0, Math.PI*2, true);
+	context.fill();	
+	
+	context.beginPath();
+	context.arc(hookleftx, hooklefty, 2, 0, Math.PI*2, true);
+	context.fill();	
+	
+	context.beginPath();
+	context.arc(hookrightx, hookrighty, 2, 0, Math.PI*2, true);
+	context.fill();	
+	
+	context.beginPath();
+	context.arc(midx, midy, 2, 0, Math.PI*2, true);
+	context.fill();
+	
+	context.beginPath();
+	context.arc(tox, toy, 2, 0, Math.PI*2, true);
+	context.fill();
+	
+	//if(directiontowardsaway == 1 && x>=topx && x<=()
+		
+	//CLEAR
+	/*context.clearRect(0,0,canvas.width,canvas.height);
+	
+	var d1 = sqsize - counter*(increment);
+	var d2 = sqsizemin + counter*(increment);
+	
+	var j=0;
+	while(j<sqnumy){
+		var i=0;
+		while(i<sqnumx){
+			var rx = sqstartx + i * (sqsize + 2*sqgap);
+			var ry = sqstarty + j * (sqsize + 2*sqgap);
+			
+			var D;
+			if(direction==1 && (i+j)%2==0) D = d1;
+			else if(direction==1 && (i+j)%2!=0) D = d2;
+			else if(direction==2 && (i+j)%2==0) D = d2;
+			else if(direction==2 && (i+j)%2!=0) D = d1;
+			
+			//alert("D:"+D.toString());
+			
+			context.beginPath();
+			context.arc(rx, ry, D/2, 0, Math.PI*2, true);
+			context.fillStyle   = "rgb(0,0,0)";
+			context.strokeStyle = "rgb(0,0,0)";
+			context.fill();
+			
+			i++;
+		}
+		j++;
+	}
+	// request another frame
+	setTimeout(function() {
+	  requestAnimationFrame(visualizePowerAndInequality);
+	}, 1000 / fps);
+	
+	//CALC - SWITCH AFTER ONE CYCLE(STEPS) COMPLETE
+	if(counter==sqstep && direction==1) {direction=2;counter=0}
+	else if(counter==sqstep && direction==2) {direction=1;counter=0}	
+	counter++;*/	
+	
+}
+
+</script>
+</body>
+</html>
