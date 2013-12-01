@@ -1,43 +1,36 @@
 <!DOCTYPE html>
 <html>
 <body>
-<canvas id="myCanvas" width="600" height="600" style="border:1px solid #d3d3d3;">
+<canvas id="myCanvas" width="300" height="300" style="border:1px solid #d3d3d3;" onClick="animate()">
 Your browser does not support the HTML5 canvas tag.</canvas>
 <script>
 var canvas = document.getElementById("myCanvas");
 var context=canvas.getContext("2d");
 
-var topx = canvas.width/2;
-var topy = 50;
-var bottomx = topx;
-var bottomy = canvas.height - 50;
+var topx = 150;
+var topy = 0;
+var bottomx = 150;
+var bottomy = 300;
 
-var hookleftx = 50;
-var hooklefty = canvas.height/2;
-var hookrightx = canvas.width - 50;
-var hookrighty = hooklefty;
+var hookleftx = 0;
+var hooklefty = 150;
+var hookrightx = 300;
+var hookrighty = 150;
+
+var fromx = topx;
+var fromy = topy;
+var tox = bottomx;
+var toy = 150 + (bottomy-150)/2;
+
+var steps = 10;
+
+var incrementy = Math.abs(toy-fromy)/steps;
 
 var fps = 4;
 
-var directiontowardsaway = 1;
-var directionexcitedrest = 1;
-
-var originx = topx;
-var originy = topy;
-
-var x = originx;
-var y = originy;
-
-var destinationx = bottomx;
-var destinationy = bottomy;
-
-var midx = originx;
-var midy = ((destinationy-originy)/2)+50;
-
-var tox = midx;
-var toy = midy + ((destinationy - midy)/2) + 50
-
-animate();
+var k=0;
+var x = fromx;
+var y = fromy;
 
 function animate(){
 
@@ -49,7 +42,7 @@ function animate(){
 	
 	context.beginPath();
 	context.arc(bottomx, bottomy, 2, 0, Math.PI*2, true);
-	context.fill();	
+	context.fill();
 	
 	context.beginPath();
 	context.arc(hookleftx, hooklefty, 2, 0, Math.PI*2, true);
@@ -60,55 +53,19 @@ function animate(){
 	context.fill();	
 	
 	context.beginPath();
-	context.arc(midx, midy, 2, 0, Math.PI*2, true);
-	context.fill();
-	
-	context.beginPath();
 	context.arc(tox, toy, 2, 0, Math.PI*2, true);
 	context.fill();
 	
-	//if(directiontowardsaway == 1 && x>=topx && x<=()
+	if(y>=toy){ return;}
 		
-	//CLEAR
-	/*context.clearRect(0,0,canvas.width,canvas.height);
+	y = k* incrementy;
 	
-	var d1 = sqsize - counter*(increment);
-	var d2 = sqsizemin + counter*(increment);
+	context.beginPath();
+	context.arc(x, y, 2, 0, Math.PI*2, true);
+	context.fillStyle   = "rgb(ff,0,0)";
+	context.fill();
 	
-	var j=0;
-	while(j<sqnumy){
-		var i=0;
-		while(i<sqnumx){
-			var rx = sqstartx + i * (sqsize + 2*sqgap);
-			var ry = sqstarty + j * (sqsize + 2*sqgap);
-			
-			var D;
-			if(direction==1 && (i+j)%2==0) D = d1;
-			else if(direction==1 && (i+j)%2!=0) D = d2;
-			else if(direction==2 && (i+j)%2==0) D = d2;
-			else if(direction==2 && (i+j)%2!=0) D = d1;
-			
-			//alert("D:"+D.toString());
-			
-			context.beginPath();
-			context.arc(rx, ry, D/2, 0, Math.PI*2, true);
-			context.fillStyle   = "rgb(0,0,0)";
-			context.strokeStyle = "rgb(0,0,0)";
-			context.fill();
-			
-			i++;
-		}
-		j++;
-	}
-	// request another frame
-	setTimeout(function() {
-	  requestAnimationFrame(visualizePowerAndInequality);
-	}, 1000 / fps);
-	
-	//CALC - SWITCH AFTER ONE CYCLE(STEPS) COMPLETE
-	if(counter==sqstep && direction==1) {direction=2;counter=0}
-	else if(counter==sqstep && direction==2) {direction=1;counter=0}	
-	counter++;*/	
+	k++;
 	
 }
 
