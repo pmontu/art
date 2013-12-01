@@ -20,11 +20,7 @@ var hookrighty = 150;
 var fromx = topx;
 var fromy = topy;
 var tox = bottomx;
-var toy = 150 + (bottomy-150)/2;
-
-var steps = 10;
-
-var incrementy = Math.abs(toy-fromy)/steps;
+var toy;
 
 var fps = 4;
 
@@ -34,34 +30,38 @@ var y = fromy;
 
 var direction = 1;
 
-alert(incrementy);
-alert(incrementy*k);
+//vibration length ie bottomx-topx must be divisible by evenbreaks
+var evenbreaks = 10;
+var j1 = 0;
+var j2 = 0;
+toy = (evenbreaks-1)*(bottomy-topy)/evenbreaks;
+//toy = 150 + (bottomy-150)/2;
+
+var steps = 10;
+var incrementy = Math.abs(toy-fromy)/steps;
+
+alert(toy);
+
+function draw(x,y,d){
+
+	context.beginPath();
+	context.arc(x, y, d, 0, Math.PI*2, true);
+	context.fill();
+}
 
 function animate(){
 
 	context.clearRect(0,0,canvas.width,canvas.height);
 
-	context.beginPath();
-	context.arc(topx, topy, 2, 0, Math.PI*2, true);
-	context.fill();
-	
-	context.beginPath();
-	context.arc(bottomx, bottomy, 2, 0, Math.PI*2, true);
-	context.fill();
-	
-	context.beginPath();
-	context.arc(hookleftx, hooklefty, 2, 0, Math.PI*2, true);
-	context.fill();	
-	
-	context.beginPath();
-	context.arc(hookrightx, hookrighty, 2, 0, Math.PI*2, true);
-	context.fill();
-	
-	context.beginPath();
-	context.arc(tox, toy, 2, 0, Math.PI*2, true);
-	context.fill();
-	
+	draw(topx,topy,2);
+	draw(bottomx,bottomy,2);
+	draw(hookleftx,hooklefty,2);
+	draw(hookrightx,hookrighty,2);
+	draw(tox,toy,2);
+	draw(fromx,fromy,2);
+		
 	y = incrementy*k;
+	//alert(y.toString() + " " + incrementy.toString() + " " + k.toString() + " " + toy.toString());
 	
 	context.beginPath();
 	context.arc(x, y, 3, 0, Math.PI*2, true);
@@ -75,8 +75,16 @@ function animate(){
 	else if(direction==1){
 		k++;		
 	}
-	if(y>=toy){ direction = 2; k-=2}
-	else if(y<=fromy){ direction = 1; k+=2}	
+	if(y>=toy){
+		direction = 2;
+		k-=2;
+		fromy = (++j2)(bottomy-topy)/evenbreaks;
+	}
+	else if(y<=fromy){
+		direction = 1;
+		k+=2;
+		toy = (evenbreaks-++j1)(bottomy-topy)/evenbreaks;
+	}	
 	
 }
 
