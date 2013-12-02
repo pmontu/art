@@ -22,13 +22,14 @@ var fromy = topy;
 var tox = bottomx;
 var toy;
 
-var fps = 10;
+var fps = 20;
 
 var k=1;
 var x = fromx;
 var y = fromy;
 
 var direction = 1;
+var direction2 = 1;
 
 //vibration length ie bottomx-topx must be divisible by evenbreaks
 var evenbreaks = 10;
@@ -46,39 +47,44 @@ function draw(x,y,d){
 	context.arc(x, y, d, 0, Math.PI*2, true);
 	context.fill();
 }
+function line(x1,y1,x2,y2){
+
+	context.moveTo(x1,y1);
+	context.lineTo(x2,y2);
+	context.stroke();
+}
 
 function animate(){
 
 	context.clearRect(0,0,canvas.width,canvas.height);
 
-	/*draw(topx,topy,2);
-	draw(bottomx,bottomy,2);
-	draw(hookleftx,hooklefty,2);
-	draw(hookrightx,hookrighty,2);
-	draw(tox,toy,2);
-	draw(fromx,fromy,2);*/
+	//draw(topx,topy,2);
+	//draw(bottomx,bottomy,2);
+	//draw(hookleftx,hooklefty,2);
+	//draw(hookrightx,hookrighty,2);
+	draw(tox,toy,5);
+	draw(fromx,fromy,2);
 		
 	y = incrementy*k;
 	//alert(y.toString() + " " + incrementy.toString() + " " + k.toString() + " " + toy.toString());
 	
-	context.beginPath();
-	context.arc(x, y, 3, 0, Math.PI*2, true);
-	context.fillStyle = "rgb(1,0,0)";
-	context.strokeStyle = "rgb(1,0,0)";
-	context.fill();	
+	//draw(x,y,5);
+	//line(hookleftx,hooklefty,x,y);	
+	//line(x,y,hookrightx,hookrighty);
 	
 	setTimeout(function() {
 	  requestAnimationFrame(animate);
 	}, 1000 / fps);
 	
 	if(toy<fromy){
+		//direction2 = 2;
 		return;
 	}
 	if(direction==2){
 		k--;
 	}
 	else if(direction==1){
-		k++;		
+		k++;
 	}
 	if(y>=toy){
 		direction = 2;
