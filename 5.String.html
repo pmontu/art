@@ -1,45 +1,30 @@
 <!DOCTYPE html>
 <html>
 <body>
-<canvas id="myCanvas" width="300" height="300" style="border:1px solid #d3d3d3;" onClick="animate()">
+
+<canvas id="myCanvas" width="20" height="20" style="border:1px solid #d3d3d3;" onClick="animate()">
 Your browser does not support the HTML5 canvas tag.</canvas>
+<br>
+
 <script>
 var canvas = document.getElementById("myCanvas");
 var context=canvas.getContext("2d");
 
-var topx = 150;
+var topx = 10;
 var topy = 0;
-var bottomx = 150;
-var bottomy = 300;
+var bottomx = 10;
+var bottomy = 20;
 
 var hookleftx = 0;
-var hooklefty = 150;
-var hookrightx = 300;
-var hookrighty = 150;
+var hooklefty = 10;
+var hookrightx = 20;
+var hookrighty = 10;
 
-var fromx = topx;
-var fromy = topy;
-var tox = bottomx;
-var toy;
+var fps = 1000;
 
-var fps = 20;
+x=10
 
-var k=1;
-var x = fromx;
-var y = fromy;
-
-var direction = 1;
-var direction2 = 1;
-
-//vibration length ie bottomx-topx must be divisible by evenbreaks
-var evenbreaks = 10;
-var j1 = 0;
-var j2 = 0;
-toy = (evenbreaks-1)*(bottomy-topy)/evenbreaks;
-toy = bottomy;
-
-var steps = 10;
-var incrementy = Math.abs(toy-fromy)/steps;
+d=3
 
 function draw(x,y,d){
 
@@ -47,56 +32,78 @@ function draw(x,y,d){
 	context.arc(x, y, d, 0, Math.PI*2, true);
 	context.fill();
 }
-function line(x1,y1,x2,y2){
 
-	context.moveTo(x1,y1);
-	context.lineTo(x2,y2);
-	context.stroke();
-}
+evenvibrations = 20
+
+i=0
+a = [i]
+s = 1
+j=evenvibrations;
+
+a.push(j)
+s=0
+i+=1
+
+k=a[0]
+
+draw(x,k,d)
 
 function animate(){
 
 	context.clearRect(0,0,canvas.width,canvas.height);
+	
+	if(a[0]<a[1])
+        k+=1
+    else k-=1
 
-	//draw(topx,topy,2);
-	//draw(bottomx,bottomy,2);
-	//draw(hookleftx,hooklefty,2);
-	//draw(hookrightx,hookrighty,2);
-	draw(tox,toy,5);
-	draw(fromx,fromy,2);
+	draw(x,k,d)
+	context.moveTo(hookleftx,hooklefty)
+	context.lineTo(x,k)
+	context.lineTo(hookrightx,hookrighty)
+	context.stroke()
 		
-	y = incrementy*k;
-	//alert(y.toString() + " " + incrementy.toString() + " " + k.toString() + " " + toy.toString());
-	
-	//draw(x,y,5);
-	//line(hookleftx,hooklefty,x,y);	
-	//line(x,y,hookrightx,hookrighty);
-	
-	setTimeout(function() {
-	  requestAnimationFrame(animate);
-	}, 1000 / fps);
-	
-	if(toy<fromy){
-		//direction2 = 2;
-		return;
+    if(k == a[1]){
+        if(s==1){
+            a.push(j)
+            a.shift()
+            s=0
+            i+=1
+		}
+        else{
+            a.push(i)
+            a.shift()
+            s=1
+            j-=1
+            if(i==evenvibrations){
+                //print "Top"
+
+                i=0
+                a = [i]
+                s = 1
+                j=evenvibrations;
+
+                a.push(j)
+                s=0
+                i+=1
+
+                k=a[0]
+
+				draw(x,k,d)
+			}
+		}
+        if (i==j){
+            s = 1
+            j=i-1
+            a.shift()
+            a.push(j)
+            k-=1
+			draw(x,k,d)
+            //print "Mid"
+            s=0
+            i+=1	
+		}
 	}
-	if(direction==2){
-		k--;
-	}
-	else if(direction==1){
-		k++;
-	}
-	if(y>=toy){
-		direction = 2;
-		k-=2;
-		fromy = ++j2*(bottomy-topy)/evenbreaks;
-	}
-	else if(y<=fromy){
-		direction = 1;
-		k+=2;
-		toy = (evenbreaks-++j1)*(bottomy-topy)/evenbreaks;
-	}
-	
+	setTimeout(function() {requestAnimationFrame(animate);}, 1000 / fps);	
 }
 
 </script>
