@@ -105,17 +105,13 @@ var direction = 1;
 visualizePowerAndInequality();
 
 function visualizePowerAndInequality(){
-	
-	//alert(direction);
-	
+		
 	//CLEAR
 	context.clearRect(0,0,canvas.width,canvas.height);
 	
 	var d1 = sqsize - counter*(increment);
 	var d2 = sqsizemin + counter*(increment);
 	
-	//alert(" inc:" + increment.toString() + " ctr:" + counter.toString() + " d1:" + d1.toString() + " d2:" + d2.toString());
-
 	var j=0;
 	while(j<sqnumy){
 		var i=0;
@@ -129,8 +125,6 @@ function visualizePowerAndInequality(){
 			else if(direction==2 && (i+j)%2==0) D = d2;
 			else if(direction==2 && (i+j)%2!=0) D = d1;
 			
-			//alert("D:"+D.toString());
-			
 			context.beginPath();
 			context.arc(rx, ry, D/2, 0, Math.PI*2, true);
 			context.fillStyle   = "rgb(0,0,0)";
@@ -142,15 +136,12 @@ function visualizePowerAndInequality(){
 		j++;
 	}
 	// request another frame
-	setTimeout(function() {
-	  requestAnimationFrame(visualizePowerAndInequality);
-	}, 1000 / fps);
+	setTimeout(function() {requestAnimationFrame(visualizePowerAndInequality);}, 1000 / fps);
 	
 	//CALC - SWITCH AFTER ONE CYCLE(STEPS) COMPLETE
 	if(counter==sqstep && direction==1) {direction=2;counter=0}
 	else if(counter==sqstep && direction==2) {direction=1;counter=0}	
-	counter++;
-	
+	counter++;	
 	
 }
 
