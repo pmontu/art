@@ -7,7 +7,7 @@ canvas {
 </style>
 </head>
 <body>
-<canvas id="canvas" width="400" height="400"></canvas>
+<canvas id="canvas" width="1000" height="400"></canvas>
 <script>
 canvas = document.getElementById('canvas')
 ctx = canvas.getContext('2d')
@@ -15,13 +15,23 @@ ctx = canvas.getContext('2d')
 ctx.translate(0,canvas.height/2);
 ctx.scale(1,-1)
 
-x=0, y=0, _2PIpixels=400, ymul=150
-while(x<=_2PIpixels){
+x=0, y=0, _2PIpixels=200, ymul=75, sine()
+
+ctx.translate(x,y);
+ctx.scale(1,-1)
+
+x=0, y=0, _2PIpixels=100, ymul=20, sine()
+
+
+function sine(){
+	while(x<=_2PIpixels){
 	ctx.moveTo(x,y)
 	x++;
 	y=Math.sin(x*2*Math.PI/_2PIpixels)*ymul
 	ctx.lineTo(x,y)
 	ctx.stroke()
+	}
 }
+
 </script>
 </body>
