@@ -7,56 +7,70 @@ canvas {
 </style>
 </head>
 <body>
-<canvas id="canvas" width="200" height="400" onclick="animate()"></canvas>
+<canvas id="canvas" width="200" height="400" ></canvas>
 <script>
 
 canvas = document.getElementById('canvas')
 ctx = canvas.getContext('2d')
 
-ctx.translate(0,canvas.height/2);
-ctx.scale(1,-1)
+ctx.translate(0, canvas.height / 2);
+ctx.scale(1, -1)
 
-k=-200
+k = -200
 
-fps=50
+fps = 50
+
+s=0
+
+colors = ["#3399FF","#3D9EFA","#47A3F5","#52A8F0","#5CADEB","#66B2E6","#70B8E0","#7ABDDB","#85C2D6","#8FC7D1","#99CCCC","#A3D1C7","#ADD6C2","#B8DBBD","#C2E0B8","#CCE6B2","#D6EBAD","#E0F0A8","#EBF5A3","#F5FA9E","#FFFF99","#FAFF94","#F5FF8F","#F0FF8A","#EBFF85","#E6FF80","#E0FF7A","#DBFF75","#D6FF70","#D1FF6B","#CCFF66","#C7FF61","#C2FF5C","#BDFF57","#B8FF52","#B2FF4C","#ADFF47","#A8FF42","#A3FF3D","#9EFF38","#99FF33","#96FF3B","#94FF42","#91FF4A","#8FFF52","#8CFF59","#8AFF61","#87FF69","#85FF70","#82FF78","#80FF80","#7DFF87","#7AFF8F","#78FF96","#75FF9E","#73FFA6","#70FFAD","#6EFFB5","#6BFFBD","#69FFC4","#66FFCC","#6BFCCF","#70FAD1","#75F7D4","#7AF5D6","#80F2D9","#85F0DB","#8AEDDE","#8FEBE0","#94E8E3","#99E6E6","#9EE3E8","#A3E0EB","#A8DEED","#ADDBF0","#B2D9F2","#B8D6F5","#BDD4F7","#C2D1FA","#C7CFFC","#CCCCFF","#C4C9FF","#BDC7FF","#B5C4FF","#ADC2FF","#A6BFFF","#9EBDFF","#96BAFF","#8FB8FF","#87B5FF","#80B2FF","#78B0FF","#70ADFF","#69ABFF","#61A8FF","#59A6FF","#52A3FF","#4AA1FF","#429EFF","#3B9CFF"]
 
 animate()
 
-function animate(){
+function animate() {
 
-	ctx.clearRect(0,canvas.height/2,canvas.width,-canvas.height);
+    ctx.clearRect(0, canvas.height / 2, canvas.width, -canvas.height);
 
     //ctx.rect(canvas.width/2,canvas.height/2,canvas.width,-canvas.height)
     //ctx.stroke()
-    
-	Y = (sine(200,150)).
-		concat(sine(200,150))
-	start=k
-	x=start
-	ctx.beginPath()
-	ctx.moveTo(x,Y[x-start])
-	x+=1
-	while(x-start<Y.length){
-		ctx.lineTo(x,Y[x-start])
-		x+=1
-	}
-	ctx.stroke()
-	
-	setTimeout(function() {requestAnimationFrame(animate);}, 1000 / fps)
-	
-	if(k==0)k=-200
-	else k+=1
+
+    Y = (sine(200, 150)).
+    concat(sine(200, 150))
+    start = k
+    x = start
+    ctx.beginPath()
+    ctx.moveTo(x, Y[x - start])
+    x += 1
+    while (x - start < Y.length-1) {
+        ctx.lineTo(x, Y[x - start])
+        if(s==100)s=0
+        else s+=1
+		ctx.strokeStyle = colors[s]
+        ctx.stroke()
+        
+        ctx.beginPath()
+        ctx.moveTo(x, Y[x - start])
+        x += 1
+    }
+    ctx.lineTo(x, Y[Y.length-1])
+    ctx.stroke()
+
+    setTimeout(function () {
+        requestAnimationFrame(animate);
+    }, 1000 / fps)
+
+    if (k == 0) k = -200
+    else k += 1
 }
 
-function sine(Period,Amplitute){
-	Y=[]
-	x=0
-	while(x<Period){
-		y = Math.sin(x*2*Math.PI/Period)*Amplitute
-		Y.push(y)
-		x+=1
-	}
-	return Y
+function sine(Period, Amplitute) {
+    Y = []
+    x = 0
+    while (x < Period) {
+        y = Math.sin(x * 2 * Math.PI / Period) * Amplitute
+        Y.push(y)
+        x += 1
+    }
+    return Y
 }
 
 </script> 
