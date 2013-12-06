@@ -7,30 +7,36 @@ canvas {
 </style>
 </head>
 <body>
-<canvas id="canvas" width="100" height="400" onclick="animate()"></canvas>
+<canvas id="canvas" width="200" height="400" onclick="animate()"></canvas>
 <script>
+
 canvas = document.getElementById('canvas')
 ctx = canvas.getContext('2d')
 
 ctx.translate(0,canvas.height/2);
 ctx.scale(1,-1)
 
-k=-100
+k=-200
 
-fps=20
+fps=50
+
+animate()
 
 function animate(){
 
 	ctx.clearRect(0,canvas.height/2,canvas.width,-canvas.height);
 
-	Period=200
-	Y = sine(Period,75)
+    //ctx.rect(canvas.width/2,canvas.height/2,canvas.width,-canvas.height)
+    //ctx.stroke()
+    
+	Y = (sine(200,150)).
+		concat(sine(200,150))
 	start=k
 	x=start
 	ctx.beginPath()
 	ctx.moveTo(x,Y[x-start])
 	x+=1
-	while(x-start<Period){
+	while(x-start<Y.length){
 		ctx.lineTo(x,Y[x-start])
 		x+=1
 	}
@@ -38,7 +44,7 @@ function animate(){
 	
 	setTimeout(function() {requestAnimationFrame(animate);}, 1000 / fps)
 	
-	if(k==100)k=-100
+	if(k==0)k=-200
 	else k+=1
 }
 
