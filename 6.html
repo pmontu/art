@@ -7,7 +7,7 @@ canvas {
 </style>
 </head>
 <body>
-<canvas id="canvas" width="1000" height="400"></canvas>
+<canvas id="canvas" width="100" height="400" onclick="animate()"></canvas>
 <script>
 canvas = document.getElementById('canvas')
 ctx = canvas.getContext('2d')
@@ -15,23 +15,43 @@ ctx = canvas.getContext('2d')
 ctx.translate(0,canvas.height/2);
 ctx.scale(1,-1)
 
-x=0, y=0, _2PIpixels=200, ymul=75, sine()
+k=-100
 
-ctx.translate(x,y);
-ctx.scale(1,-1)
+fps=20
 
-x=0, y=0, _2PIpixels=100, ymul=20, sine()
+function animate(){
 
+	ctx.clearRect(0,canvas.height/2,canvas.width,-canvas.height);
 
-function sine(){
-	while(x<=_2PIpixels){
-	ctx.moveTo(x,y)
-	x++;
-	y=Math.sin(x*2*Math.PI/_2PIpixels)*ymul
-	ctx.lineTo(x,y)
-	ctx.stroke()
+	Period=200
+	Y = sine(Period,75)
+	start=k
+	x=start
+	ctx.beginPath()
+	ctx.moveTo(x,Y[x-start])
+	x+=1
+	while(x-start<Period){
+		ctx.lineTo(x,Y[x-start])
+		x+=1
 	}
+	ctx.stroke()
+	
+	setTimeout(function() {requestAnimationFrame(animate);}, 1000 / fps)
+	
+	if(k==100)k=-100
+	else k+=1
 }
 
-</script>
+function sine(Period,Amplitute){
+	Y=[]
+	x=0
+	while(x<Period){
+		y = Math.sin(x*2*Math.PI/Period)*Amplitute
+		Y.push(y)
+		x+=1
+	}
+	return Y
+}
+
+</script> 
 </body>
