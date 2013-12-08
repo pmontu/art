@@ -19,7 +19,7 @@ ctx.scale(1, -1)
 fps = 50
 
 P=-200
-A=150
+A=getP()
 
 yp1 = Math.sin(0 * 2 * Math.PI / getP()) * A
 yp2 = Math.sin(1 * 2 * Math.PI / getP()) * A
@@ -49,6 +49,7 @@ function animate() {
 	if(i==getP()){
 		if(P==200)P=-200
 		else P+=50
+		A=getP()
 		i=0
 	}
 	else i += 1
