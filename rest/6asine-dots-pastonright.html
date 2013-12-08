@@ -7,7 +7,7 @@ canvas {
 </style>
 </head>
 <body>
-<canvas id="canvas" width="200" height="400" onclick="" ></canvas>
+<canvas id="canvas" width="500" height="400" onclick="" ></canvas>
 <script>
 
 canvas = document.getElementById('canvas')
@@ -24,7 +24,15 @@ A=getP()
 yp1 = Math.sin(0 * 2 * Math.PI / getP()) * A
 yp2 = Math.sin(1 * 2 * Math.PI / getP()) * A
 
-i=2
+S=400
+Y=[]
+k=0
+while(k<S){
+	Y.push(Math.sin(k * 2 * Math.PI / getP()) * A)
+	k+=1
+}
+
+i=0
 
 animate()
 
@@ -35,16 +43,24 @@ function animate() {
     y = Math.sin(i * 2 * Math.PI / getP()) * A
 	
 	ctx.beginPath();
-	ctx.arc(100, y, 6, 0, Math.PI*2, true);
-	ctx.fill();
-	ctx.beginPath();
-	ctx.arc(99, yp1, 4, 0, Math.PI*2, true);
-	ctx.fill();
-	ctx.arc(98, yp2, 2, 0, Math.PI*2, true);
+	ctx.arc(S, y, 4, 0, Math.PI*2, true);
 	ctx.fill();
 	
-	yp2=yp1
-	yp1=y
+	k=0
+	while(k<S){
+		ctx.beginPath();
+		ctx.arc(k, Y[k], 2, 0, Math.PI*2, true);
+		ctx.fill();
+		k+=1
+	}
+
+	Y[S-1] = y	
+	k=0
+	while(k<S-1){
+		Y[k] = Y[k+1]
+		k+=1
+	}
+	
 	
 	if(i==getP()){
 		if(P==200)P=-200
