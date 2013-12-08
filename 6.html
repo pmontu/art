@@ -2,7 +2,7 @@
 <head>
 <style>
 canvas {
-	border: 1px solid red;
+        border: 1px solid red;
 }
 </style>
 </head>
@@ -20,6 +20,9 @@ k = -200
 
 fps = 50
 
+yp1 = Math.sin(0 * 2 * Math.PI / 200) * 150
+yp2 = Math.sin(1 * 2 * Math.PI / 200) * 150
+
 animate()
 
 function animate() {
@@ -31,22 +34,32 @@ function animate() {
     start = k
     x = start
     ctx.beginPath()
-    ctx.moveTo(x, Y[x - start][0])
+    ctx.moveTo(x, Y[x - start])
     x += 1
     while (x - start < Y.length-1) {
-        ctx.lineTo(x, Y[x - start][0])
+        ctx.lineTo(x, Y[x - start])
         ctx.stroke()
-		
-		ctx.beginPath()
-		ctx.arc(x, Y[x - start][0], Y[x - start][1], 0, Math.PI*2, true);
-		ctx.fill();
         
         ctx.beginPath()
-        ctx.moveTo(x, Y[x - start][0])
+        ctx.moveTo(x, Y[x - start])
         x += 1
     }
-    ctx.lineTo(x, Y[Y.length-1][0])
+    ctx.lineTo(x, Y[Y.length-1])
     ctx.stroke()
+	
+	y = Math.sin(k * 2 * Math.PI / 200) * 150
+	
+	ctx.beginPath();
+	ctx.arc(100, y, 6, 0, Math.PI*2, true);
+	ctx.fill();
+	ctx.beginPath();
+	ctx.arc(101, yp1, 4, 0, Math.PI*2, true);
+	ctx.fill();
+	ctx.arc(102, yp2, 2, 0, Math.PI*2, true);
+	ctx.fill();
+	
+	yp2=yp1
+	yp1=y
 
     setTimeout(function () {
         requestAnimationFrame(animate);
@@ -59,12 +72,9 @@ function animate() {
 function sine(Period, Amplitute) {
     Y = []
     x = 0
-	c=0
     while (x < Period) {
         y = Math.sin(x * 2 * Math.PI / Period) * Amplitute
-        if(c==5)c=0
-		else c+=1
-		Y.push([y,c])
+        Y.push(y)
         x += 1
     }
     return Y
