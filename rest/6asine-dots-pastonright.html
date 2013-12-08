@@ -18,11 +18,11 @@ ctx.scale(1, -1)
 
 fps = 50
 
-P=200
+P=-200
 A=150
 
-yp1 = Math.sin(0 * 2 * Math.PI / P) * A
-yp2 = Math.sin(1 * 2 * Math.PI / P) * A
+yp1 = Math.sin(0 * 2 * Math.PI / getP()) * A
+yp2 = Math.sin(1 * 2 * Math.PI / getP()) * A
 
 i=2
 
@@ -32,7 +32,7 @@ function animate() {
 
     ctx.clearRect(0, canvas.height / 2, canvas.width, -canvas.height);
 	
-    y = Math.sin(i * 2 * Math.PI / P) * A
+    y = Math.sin(i * 2 * Math.PI / getP()) * A
 	
 	ctx.beginPath();
 	ctx.arc(100, y, 6, 0, Math.PI*2, true);
@@ -46,15 +46,19 @@ function animate() {
 	yp2=yp1
 	yp1=y
 	
-	if(i==P){
-		if(P==0)P=200,A=150
-		else P-=50,A-=25
+	if(i==getP()){
+		if(P==200)P=-200
+		else P+=50
 		i=0
 	}
 	else i += 1
 
     setTimeout(function () {requestAnimationFrame(animate);}, 1000 / fps)
 
+}
+
+function getP(){
+	return Math.abs(P)
 }
 
 </script> 
